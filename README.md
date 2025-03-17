@@ -1,8 +1,8 @@
 # Webentwicklung_Projekt
 
-cheat-sheet: markdownguide.org
-
 Beschreibung:
 
-- Funktion 1
-- Funktion 2
+- Finanzübersicht
+- Ausgaben mit Datum eingebbar
+- Ausgabe kann auch gelöscht werden
+- am Ende steht die Summe der Ausgaben
