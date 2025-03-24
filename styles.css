@@ -1,0 +1,44 @@
+main{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+}
+
+body {
+    background: #000000;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.RegelnUndEingabe{
+    margin-left: 2em;
+}
+
+.Spielfeld {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    grid-gap: 5px;
+    justify-content: center;
+}
+
+.Feld {
+    width: 150px;
+    height: 150px;
+    background-color: rgb(0, 0, 0);
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.Feld:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
+.Rangliste {
+    margin-right: 3em;
+}
