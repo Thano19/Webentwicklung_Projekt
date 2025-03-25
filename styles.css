@@ -1,44 +1,133 @@
-main{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1em;
-}
-
 body {
-    background: #000000;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #121212, #1d1d1d); /* Farbverlauf von Schwarz zu Dunkelgrau */
+    color: #f1f1f1;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 h1 {
     text-align: center;
+    font-size: 3em;
+    margin-bottom: 1em;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); /* Weicher Schatten hinter dem Titel */
 }
 
-.RegelnUndEingabe{
+main {
+    display: flex;
+    justify-content: space-around; /* Verteilt den Inhalt gleichmäßig mit Platz dazwischen */
+    align-items: flex-start; /* Richtet die Inhalte oben aus */
+    margin-top: 2em;
+    padding: 0 2em;
+}
+
+.RegelnUndEingabeUndButtons {
     margin-left: 2em;
+    font-size: 1.2em;
+    max-width: 300px;
+    padding-right: 2em;
+
+}
+
+.Regeln h2 {
+    text-decoration: underline;
+}
+
+.Regeln ol {
+    padding-left: 20px;
+}
+
+.Eingabe {
+
+}
+
+.Buttons {
+    
 }
 
 .Spielfeld {
     display: grid;
-    grid-template-columns: repeat(3, 150px);
-    grid-template-rows: repeat(3, 150px);
-    grid-gap: 5px;
-    justify-content: center;
+    grid-template-columns: repeat(3, 150px); /* Erzeugt 3 gleich breite Spalten */
+    grid-template-rows: repeat(3, 150px); /* Erzeugt 3 gleich hohe Zeilen */
+    grid-gap: 10px; /* Abstand zwischen den Feldern */
+    justify-content: center; /* Zentriert das Spielfeld */
+    margin-top: 2em;
 }
 
 .Feld {
     width: 150px;
     height: 150px;
-    background-color: rgb(0, 0, 0);
-    border: 2px solid #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #222;
+    border: 2px solid #444; /* Dünner, grauer Rand um die Felder */
+    border-radius: 10px; /* Abgerundete Ecken für die Felder */
+    cursor: pointer; /* Zeiger-Cursor, um anzuzeigen, dass das Feld klickbar ist */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Sanfte Übergänge für Hover-Effekte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Leichter Schatten für die Felder */
 }
 
 .Feld:hover {
-    background-color: #333;
+    background-color: #444;
     transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
-.Rangliste {
+
+.TimerUndRangliste {
     margin-right: 3em;
+    font-size: 1.2em;
+    color: #f1f1f1;
+    max-width: 300px;
+    padding: 1.5em;
+    padding-left: 2em;
+    border: 2px solid #444;
+    border-radius: 15px;
+    background-color: rgba(50, 50, 50, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.Timer {
+    background-color: rgba(0, 0, 0, 0.7); /* Dunklerer Hintergrund für den Info-Text */
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 1em; /* Abstand zwischen dem Info-Text und der Rangliste */
+    border-radius: 8px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.Rangliste {
+    margin-top: 1em;
+}
+
+.Rangliste h2 {
+    text-decoration: underline;
+}
+
+.Rangliste ol {
+    padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Spielfeld {
+        grid-template-columns: repeat(3, 120px);
+        grid-template-rows: repeat(3, 120px);
+    }
+
+    .Feld {
+        width: 120px;
+        height: 120px; 
+    }
+
+    .RegelnUndEingabeUndButtons, .TimerUndRangliste {
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
