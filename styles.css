@@ -149,6 +149,27 @@ input[type="text"]::placeholder {
     padding-left: 20px;
 }
 
+footer {
+    text-align: center;
+    margin-top: 1em;
+    padding: 1em 0;
+    background-color: #222;
+    color: #f1f1f1;
+}
+
+footer .footer-link {
+    color: #f1f1f1;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+footer .footer-link:hover {
+    color: #ff6600;
+    transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
     main {
         flex-direction: column;
