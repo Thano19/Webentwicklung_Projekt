@@ -1,0 +1,170 @@
+body {
+    background: linear-gradient(135deg, #121212, #1d1d1d); /* Dunkler diagonaler Farbverlauf als Hintergrund */
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 1em;
+    color: #ffffff;
+}
+
+main {
+    display: flex; /* Struktur der Seite */
+    justify-content: space-around; /* Elemente haben gleichen Abstand von einander */
+    align-items: flex-start; /* von oben nach unten Orientierung (ChatGPT) */
+    margin-top: 2em;
+    padding: 0 2em;
+}
+
+.RegelnUndEingabeUndButtons {
+    margin-left: 2em;
+    font-size: 1.2em;
+    max-width: 300px; /* maximale Breite der Schrift */
+    padding-right: 2em;
+}
+
+.Regeln h2 {
+    text-decoration: underline;
+}
+
+.Regeln ol {
+    padding-left: 20px; /* Einrückung der Liste */
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #444;
+    border-radius: 10px; /* Abrundung der Ecken (ChatGPT) */
+    padding: 0.8em 2em;
+    cursor: pointer; /* Zeiger-Cursor bei Hover (ChatGPT) */
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Weiche Übergänge (ChatGPT) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Leichter Schatten für 3D-Effekt (ChatGPT) */
+    margin: 0.5em 0;
+}
+
+button:hover { /* Hervorhebung der Buttons beim drüberhovern (ChatGPT) */
+    background-color: #444;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+button:active { /* Farbänderung des Buttons beim Hovern (ChatGPT) */
+    background-color: #555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+input[type="text"], input[type="name"] {
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #444;
+    border-radius: 10px;
+    padding: 0.8em;
+    font-size: 1.1em;
+    width: 80%; /* macht das Feld schmaler */
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+input[type="text"]:focus { /* leichter Zoom beim Eintragen des Namens (ChatGPT) */
+    background-color: #444;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    outline: none; /* Entfernt den Standardrahmen */
+}
+
+input[type="text"]::placeholder {
+    color: #bbb; /* Farbe des Platzhaltertexts */
+}
+
+.Spielfeld {
+    display: grid;
+    grid-template-columns: repeat(3, 150px); /* 3 Spalten à 150px */
+    grid-template-rows: repeat(3, 150px); /* 3 Zeilen à 150px */
+    grid-gap: 10px; /* Abstand zwischen Feldern */
+    justify-content: center; /* Zentriert das Grid */
+    margin-top: -1em;
+    margin-right: 2em;
+}
+
+.Feld {
+    width: 150px;
+    height: 150px;
+    background-color: #222;
+    border: 2px solid #444;
+    border-radius: 10px;
+    cursor: pointer; /* Cursor als Zeiger */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.Feld:hover { /* Hervorhebung der Buttons beim drüberhovern (ChatGPT) */
+    background-color: #444;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.TimerUndRangliste {
+    margin-right: 3em;
+    font-size: 1.2em;
+    color: #f1f1f1;
+    max-width: 300px;
+    padding: 1.5em;
+    padding-left: 2em;
+    border: 2px solid #444;
+    border-radius: 15px;
+    background-color: rgba(50, 50, 50, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.Timer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 1em;
+    border: 2px solid #444;
+    border-radius: 8px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.Rangliste {
+    margin-top: 1em;
+}
+
+.Rangliste h2 {
+    text-decoration: underline;
+}
+
+.Rangliste ol {
+    padding-left: 20px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 8em;
+    padding: 1em 0;
+    background-color: #222;
+    color: #ffffff;
+}
+
+footer .footer-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+footer .footer-link:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+}

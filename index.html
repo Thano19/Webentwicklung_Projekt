@@ -2,10 +2,75 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Titel der Seite</title>
+    <title>Tik Tak Toe: Der Kampf der X und O</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="C:\Users\Thano\Desktop\Studium 2. Semester\Webentwicklung\Webentwicklung_Projekt/tic_tak_toe_icon.png" type="image/png">
+    <script src="script.js" defer></script>
   </head>
   <body>
-    <p>Text im Browserfenster</p>
+    <header>
+      <h1>Willkommen zum kompetetivsten Spiel der Welt</h1> 
+      <hr />
+    </header>
+    <main>
+      <div class="RegelnUndEingabeUndButtons">
+      <div class="Regeln">
+        <h2>Regeln:</h2>
+        <ol>
+          <li>Name eintragen</li>
+          <li>Auf Start drücken</li>
+        </ol>
+      </div>
+      <p></p>
+      <p></p>
+      <div class="Eingabe">
+        <input type="text" name="name" placeholder="Dein Name">
+    </div>
+    <div class="Buttons">
+        <button>START</button>
+        <button>ZURÜCK</button>
+    </div>
+    </div>
+      <div class="Spielfeld">
+        <div class="Reihe1">
+            <button class="Feld" id="Feld0"></button>
+            <button class="Feld" id="Feld1"></button>
+            <button class="Feld" id="Feld2"></button>
+        </div>
+        <div class="Reihe2">
+            <button class="Feld" id="Feld3"></button>
+            <button class="Feld" id="Feld4"></button>
+            <button class="Feld" id="Feld5"></button>
+        </div>
+        <div class="Reihe3">
+            <button class="Feld" id="Feld6"></button>
+            <button class="Feld" id="Feld7"></button>
+            <button class="Feld" id="Feld8"></button>
+        </div>
+    </div>
+    <div class="TimerUndRangliste">
+      <div class="Timer">
+        <p>Zeit</p>
+      </div>
+      <div class="Rangliste">
+        <h2><u>Rangliste:</u></h2>
+      <ol>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+        <li>Name, Zeit</li>
+      </ol>
+      </div>
+    </div>
+    </main>
+    <footer>
+      <a href="https://www.youtube.com/watch?v=Tm_lWGsBpHs" title="Meme"> Wenn die Klausurenphase wieder beginnt </a>
+    </footer>
   </body>
 </html>
