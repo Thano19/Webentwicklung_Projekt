@@ -24,11 +24,11 @@
       <p></p>
       <p></p>
       <div class="Eingabe">
-        <input type="text" name="name" placeholder="Dein Name">
+        <input type="text" id="nameInput" name="name" placeholder="Dein Name">
     </div>
     <div class="Buttons">
-        <button>START</button>
-        <button>ZURÜCK</button>
+      <button onclick="nameCheck()"><span id="Start">START</span></button>
+      <button >ZURÜCK</button>
     </div>
     </div>
       <div class="Spielfeld">
@@ -50,7 +50,7 @@
     </div>
     <div class="TimerUndRangliste">
       <div class="Timer">
-        <p>Zeit</p>
+        <p><span id="Zeitanzeige">00:00</span></p>
       </div>
       <div class="Rangliste">
         <h2><u>Rangliste:</u></h2>
