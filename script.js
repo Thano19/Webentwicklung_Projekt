@@ -38,22 +38,20 @@ function Spielbeginn() {
     for (let i = 0; i < 9; i++) {
         const feld = document.getElementById(`Feld${i}`);
 
-        // Nur wenn noch kein Listener gesetzt wurde
         if (!feld.classList.contains("listener-hinzugefuegt")) {
             feld.addEventListener("click", async () => {
                 if (feld.textContent !== "") 
-                    return; // Klick ignorieren, wenn Feld schon belegt
-                // Spielerzug (X)
+                    return;
+
                 feld.textContent = "X";
                 feld.classList.add("deaktiviert");
 
                 if (Spielstand("X")) {
-                    zugHistorie.push({ spielerFeld: feld, gegnerFeld: null }); //(ChatGPT)
+                    zugHistorie.push({ spielerFeld: feld, gegnerFeld: null });
                     spielBeenden("X");
                     return;
                 }
 
-                // Gegnerzug mit kleiner Verzögerung (ChatGPT)
                 await new Promise((resolve) => setTimeout(resolve, 300));
                 const gegnerFeld = Gegnerzug();
 
@@ -68,7 +66,6 @@ function Spielbeginn() {
     }
 }
 
-// Führt einen zufälligen Gegnerzug aus (O)
 function Gegnerzug() {
     const freieFelder = [];
     for (let i = 0; i < 9; i++) {
@@ -88,7 +85,6 @@ function Gegnerzug() {
     return zufallsFeld;
 }
 
-// Prüft, ob der angegebene Spieler gewonnen hat
 function Spielstand(spieler) {
     const kombinationen = [
         ["Feld0", "Feld1", "Feld2"],
@@ -104,24 +100,20 @@ function Spielstand(spieler) {
     return kombinationen.some(kombi => kombi.every(feldId => document.getElementById(feldId).textContent === spieler));
 }
 
-// Beendet das Spiel, zeigt Alert und fügt ggf. zur Rangliste hinzu
 function spielBeenden(sieger) {
     clearInterval(timerLaeuft); // Timer anhalten
     alert(`Spiel beendet! ${sieger} gewinnt!`);
 
-    // Nur wenn Spieler (X) gewinnt, zur Rangliste hinzufügen
     if (sieger === "X") {
         const name = document.getElementById("nameInput").value.trim();
         zurRanglisteHinzufuegen(name, sekunden);
     }
 
-    // Alle Felder deaktivieren
     for (let i = 0; i < 9; i++) {
         document.getElementById(`Feld${i}`).classList.add("deaktiviert");
     }
 }
 
-// Macht den letzten Spielzug rückgängig (Spieler und Gegner)
 function letzterZugZuruecknehmen() {
     if (zugHistorie.length === 0) return;
 
@@ -139,14 +131,19 @@ function letzterZugZuruecknehmen() {
     }
 }
 
-// ChatGPT
 function zurRanglisteHinzufuegen(name, sekunden) {
     ranglisteEintraege.push({ name, sekunden });
-
-    // Sortieren: Schnellste Zeit oben
     ranglisteEintraege.sort((a, b) => a.sekunden - b.sekunden);
+    localStorage.setItem("rangliste", JSON.stringify(ranglisteEintraege));
+    ranglisteAnzeigen();
+}
 
-    // Rangliste im HTML aktualisieren
+function ranglisteAnzeigen() {
+    const gespeicherteRangliste = localStorage.getItem("rangliste");
+    if (gespeicherteRangliste) {
+        ranglisteEintraege = JSON.parse(gespeicherteRangliste);
+    }
+
     const liste = document.getElementById("ranglisteListe");
     liste.innerHTML = "";
 
@@ -160,24 +157,25 @@ function zurRanglisteHinzufuegen(name, sekunden) {
     }
 }
 
-// Setzt das Spiel komplett zurück für eine neue Runde
 function neustart() {
-    // Spielfeld leeren und aktivieren
     for (let i = 0; i < 9; i++) {
         const feld = document.getElementById(`Feld${i}`);
         feld.textContent = "";
         feld.classList.remove("deaktiviert");
     }
 
-    // Spielstatus zurücksetzen
     sekunden = 0;
     zugHistorie = [];
     updateZeitAnzeige();
     clearInterval(timerLaeuft);
     timerLaeuft = null;
 
-    // Eingabefeld und Button zurücksetzen
     document.getElementById("nameInput").value = "";
     document.getElementById("nameInput").disabled = false;
     document.getElementById("startBtn").textContent = "START";
 }
+
+// Beim Laden der Seite die gespeicherte Rangliste anzeigen
+document.addEventListener("DOMContentLoaded", () => {
+    ranglisteAnzeigen();
+});
