@@ -14,23 +14,22 @@
     </header>
     <main>
       <div class="RegelnUndEingabeUndButtons">
-      <div class="Regeln">
-        <h2>Regeln:</h2>
-        <ol>
-          <li>Name eintragen</li>
-          <li>Auf Start drücken</li>
-        </ol>
+        <div class="Regeln">
+          <h2>Regeln:</h2>
+          <ol>
+            <li>Name eintragen</li>
+            <li>Auf Start drücken</li>
+          </ol>
+        </div>
+        <div class="Eingabe">
+          <input type="text" id="nameInput" name="name" placeholder="Dein Name">
+        </div>
+        <div class="Buttons">
+          <button id="startBtn" onclick="nameCheck()"><span id="Start">START</span></button>
+          <button onclick="letzterZugZuruecknehmen()">ZURÜCK</button>
+        </div>
       </div>
-      <p></p>
-      <p></p>
-      <div class="Eingabe">
-        <input type="text" id="nameInput" name="name" placeholder="Dein Name">
-    </div>
-    <div class="Buttons">
-      <button onclick="nameCheck()"><span id="Start">START</span></button>
-      <button >ZURÜCK</button>
-    </div>
-    </div>
+
       <div class="Spielfeld">
         <div class="Reihe1">
             <button class="Feld" id="Feld0"></button>
@@ -47,30 +46,23 @@
             <button class="Feld" id="Feld7"></button>
             <button class="Feld" id="Feld8"></button>
         </div>
-    </div>
-    <div class="TimerUndRangliste">
-      <div class="Timer">
-        <p><span id="Zeitanzeige">00:00</span></p>
       </div>
-      <div class="Rangliste">
-        <h2><u>Rangliste:</u></h2>
-      <ol>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-        <li>Name, Zeit</li>
-      </ol>
+
+      <div class="TimerUndRangliste">
+        <div class="Timer">
+          <p><span id="Zeitanzeige">00:00</span></p>
+        </div>
+        <div class="Rangliste">
+          <h2><u>Rangliste:</u></h2>
+          <ol id="ranglisteListe">
+            <!-- Dynamisch per JavaScript befüllt -->
+          </ol>
+        </div>
       </div>
-    </div>
     </main>
+
     <footer>
-      <a href="https://www.youtube.com/watch?v=Tm_lWGsBpHs" title="Meme"> Wenn die Klausurenphase wieder beginnt </a>
+      <a href="https://www.youtube.com/watch?v=Tm_lWGsBpHs" title="Meme">Wenn die Klausurenphase wieder beginnt</a>
     </footer>
   </body>
 </html>

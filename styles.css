@@ -101,8 +101,8 @@ input[type="text"]::placeholder {
     grid-template-rows: repeat(3, 150px); /* 3 Zeilen à 150px */
     grid-gap: 10px; /* Abstand zwischen Feldern */
     justify-content: center; /* Zentriert das Grid */
-    margin-top: -1em;
-    margin-right: 2em;
+    align-content: center;
+    margin-top: 2em;
 }
 
 .Feld {
@@ -111,15 +111,37 @@ input[type="text"]::placeholder {
     background-color: #222;
     border: 2px solid #444;
     border-radius: 10px;
-    cursor: pointer; /* Cursor als Zeiger */
+    cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 5rem;
+    color: red;
+    font-weight: bold;
+
+    /* Verhindert, dass sich der Button über seine Grid-Zelle hinaus ausdehnt */
+    box-sizing: border-box;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
 }
 
 .Feld:hover { /* Hervorhebung der Buttons beim drüberhovern (ChatGPT) */
     background-color: #444;
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.Feld.deaktiviert {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: default;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .TimerUndRangliste {
