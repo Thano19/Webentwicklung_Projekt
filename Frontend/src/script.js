@@ -139,10 +139,10 @@ function zurRanglisteHinzufuegen(name, sekunden) {
 }
 
 function ranglisteAnzeigen() {
-    const gespeicherteRangliste = localStorage.getItem("rangliste");
-    if (gespeicherteRangliste) {
-        ranglisteEintraege = JSON.parse(gespeicherteRangliste);
-    }
+//    const gespeicherteRangliste = localStorage.getItem("rangliste");
+//    if (gespeicherteRangliste) {
+//        ranglisteEintraege = JSON.parse(gespeicherteRangliste);
+//    }
 
     const liste = document.getElementById("ranglisteListe");
     liste.innerHTML = "";
@@ -255,3 +255,9 @@ function spielBeenden(sieger) {
 document.addEventListener("DOMContentLoaded", () => {
     ranglisteVonDatenbankLaden();
 });
+
+async function ranglisteReset() {
+    const response = await fetch(`${API_BASE_URL}/rangliste`, {method: 'DELETE'});
+    ranglisteEintraege = [];
+    ranglisteAnzeigen();
+}
