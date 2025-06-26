@@ -187,11 +187,11 @@ async function requestTextWithGET(url) {
   console.log('Response-Text:', text); // Text aus dem Response-Body
 }
 
-requestTextWithGET('http://127.0.0.1:3000/');
+requestTextWithGET('http://127.0.0.1:3001/');
 console.log('Zwischenzeitlich weiterarbeiten...');
 
 // API Base URL
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://localhost:3001/api';
 
 // Funktion: Rangliste von der Datenbank laden
 async function ranglisteVonDatenbankLaden() {
