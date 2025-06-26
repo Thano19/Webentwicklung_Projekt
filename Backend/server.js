@@ -1,61 +1,114 @@
-// server.js
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const cors = require('cors');
+const http = require('http');
+const fs = require('fs');
 const path = require('path');
+const { MongoClient, ObjectId } = require('mongodb');
+const { URL } = require('url');
+require('dotenv').config();
 
-const app = express();
-const PORT = 3000;
+const MONGO_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const DB_NAME = 'tictactoe';
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
+const client = new MongoClient(MONGO_URL);
+let db, ranglisteCollection;
 
-// 🗂️ Statische Dateien aus "public"-Ordner ausliefern
-app.use(express.static(path.join(__dirname, 'public')));
+async function startServer() {
+  try {
+    await client.connect();
+    console.log('✅ MongoDB verbunden');
+    db = client.db(DB_NAME);
+    ranglisteCollection = db.collection('rangliste');
 
-// 🗃️ SQLite-Datenbank vorbereiten
-const db = new sqlite3.Database('./rangliste.db');
+    const server = http.createServer(async (req, res) => {
+      const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+      const pathname = parsedUrl.pathname;
 
-// 📦 Tabelle erstellen, falls noch nicht vorhanden
-db.run(`
-  CREATE TABLE IF NOT EXISTS rangliste (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    sekunden INTEGER
-  )
-`);
+      console.log(`${req.method} ${pathname}`);
 
-// ➕ Ranglisteneintrag hinzufügen
-app.post('/api/rangliste', (req, res) => {
-  const { name, sekunden } = req.body;
-  if (!name || typeof sekunden !== 'number') {
-    return res.status(400).json({ error: 'Ungültige Eingabe' });
+      // API: Rangliste abrufen
+      if (req.method === 'GET' && pathname === '/api/rangliste') {
+        const daten = await ranglisteCollection.find()
+          .sort({ sekunden: 1 })
+          .limit(10)
+          .toArray();
+        const umgewandelt = daten.map(umwandelnMongoId);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(umgewandelt));
+      }
+
+      // API: Rangliste speichern
+      else if (req.method === 'POST' && pathname === '/api/rangliste') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+          const data = JSON.parse(body);
+          const neuerEintrag = { name: data.name, sekunden: data.sekunden };
+          const result = await ranglisteCollection.insertOne(neuerEintrag);
+          const gespeicherterEintrag = { ...neuerEintrag, id: result.insertedId };
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(gespeicherterEintrag));
+        });
+      }
+
+      // API: Rangliste löschen
+      else if (req.method === 'DELETE' && pathname === '/api/rangliste') {
+        await ranglisteCollection.deleteMany({});
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Rangliste wurde zurückgesetzt' }));
+      }
+
+      // Statische Dateien aus Frontend/
+      else if (req.method === 'GET') {
+        const publicPath = path.join(__dirname, '..', 'Frontend');
+        const dateiPfad = path.join(publicPath, pathname === '/' ? 'index.html' : pathname.slice(1));
+        const ext = path.extname(dateiPfad);
+        const mime = {
+          '.html': 'text/html; charset=utf-8',
+          '.css': 'text/css; charset=utf-8',
+          '.js': 'text/javascript; charset=utf-8',
+          '.png': 'image/png'
+        };
+
+        fs.readFile(dateiPfad, (err, data) => {
+          if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('404 Not Found');
+          } else {
+            res.writeHead(200, { 'Content-Type': mime[ext] || 'text/plain' });
+            res.end(data);
+          }
+        });
+      }
+
+      // Unbekannte Route
+      else {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Nicht gefunden' }));
+      }
+    });
+
+    const PORT = process.env.PORT || 3001;
+    server.listen(PORT, '0.0.0.0', () =>
+      console.log(`🚀 Server läuft auf http://localhost:${PORT}`)
+    );
+
+  } catch (error) {
+    console.error('❌ MongoDB Verbindungsfehler:', error);
+    process.exit(1);
   }
+}
 
-  db.run(
-    'INSERT INTO rangliste (name, sekunden) VALUES (?, ?)',
-    [name, sekunden],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ id: this.lastID });
-    }
-  );
+startServer().catch(err => {
+  console.error("Fehler beim Starten des Servers:", err);
+  process.exit(1);
 });
 
-// 📄 Rangliste abrufen (Top 10)
-app.get('/api/rangliste', (req, res) => {
-  db.all(
-    'SELECT name, sekunden FROM rangliste ORDER BY sekunden ASC LIMIT 10',
-    [],
-    (err, rows) => {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json(rows);
-    }
-  );
-});
+function umwandelnMongoId(eintrag) {
+  return { ...eintrag, id: eintrag._id };
+}
 
-// Server starten
-app.listen(PORT, () => {
-  console.log(`✅ Server läuft auf http://localhost:${PORT}`);
+process.on('SIGINT', async () => {
+  console.log('\n🛑 Server wird beendet...');
+  await client.close();
+  console.log('✅ MongoDB-Verbindung geschlossen');
+  process.exit(0);
 });

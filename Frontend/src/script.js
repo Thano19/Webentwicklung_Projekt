@@ -189,3 +189,69 @@ async function requestTextWithGET(url) {
 
 requestTextWithGET('http://127.0.0.1:3000/');
 console.log('Zwischenzeitlich weiterarbeiten...');
+
+// API Base URL
+const API_BASE_URL = 'http://localhost:3000/api';
+
+// Funktion: Rangliste von der Datenbank laden
+async function ranglisteVonDatenbankLaden() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rangliste`);
+        if (!response.ok) throw new Error('Fehler beim Laden der Rangliste');
+        
+        const eintraege = await response.json();
+        ranglisteEintraege = eintraege;
+        ranglisteAnzeigen();
+    } catch (error) {
+        console.error('Fehler beim Laden der Rangliste:', error);
+        // Fallback zu localStorage
+        ranglisteAnzeigen();
+    }
+}
+
+// Funktion: Eintrag in die Datenbank speichern
+async function inDatenbankSpeichern(name, sekunden) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/rangliste`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, sekunden })
+        });
+        
+        if (!response.ok) throw new Error('Fehler beim Speichern');
+        
+        const neuerEintrag = await response.json();
+        console.log('✅ Erfolgreich gespeichert:', neuerEintrag);
+        
+        // Rangliste neu laden
+        await ranglisteVonDatenbankLaden();
+        
+    } catch (error) {
+        console.error('Fehler beim Speichern:', error);
+        // Fallback zu localStorage
+        zurRanglisteHinzufuegen(name, sekunden);
+    }
+}
+
+// Angepasste Funktion für Spielende
+function spielBeenden(sieger) {
+    clearInterval(timerLaeuft);
+    alert(`Spiel beendet! ${sieger} gewinnt!`);
+
+    if (sieger === "X") {
+        const name = document.getElementById("nameInput").value.trim();
+        // In Datenbank speichern statt localStorage
+        inDatenbankSpeichern(name, sekunden);
+    }
+
+    for (let i = 0; i < 9; i++) {
+        document.getElementById(`Feld${i}`).classList.add("deaktiviert");
+    }
+}
+
+// Beim Laden der Seite Rangliste von Datenbank laden
+document.addEventListener("DOMContentLoaded", () => {
+    ranglisteVonDatenbankLaden();
+});
